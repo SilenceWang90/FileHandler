@@ -10,7 +10,10 @@ import lombok.Data;
  */
 @Data
 public class HutoolReadData {
+    //对应标题为businessCode
     private String businessCode;
+    //对应标题为categoryTypeName
     private String categoryTypeName;
+    //对应标题为dueDate
     private String dueDate;
 }

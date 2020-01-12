@@ -48,6 +48,9 @@ public class FileController {
     @PostMapping("/hutoolReadExcel")
     public String hutoolReadExcel(@RequestParam("file") MultipartFile file) throws IOException {
         ExcelReader excelReader = ExcelUtil.getReader(file.getInputStream(), "临时定级");
+        //属性名为字段名，属性值为字段值
+        List<HutoolReadData> list = excelReader.readAll(HutoolReadData.class);
+        log.info("读取的数据为：{}", list);
         return "读取成功";
     }
 }
