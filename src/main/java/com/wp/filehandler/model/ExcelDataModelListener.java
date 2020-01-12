@@ -2,6 +2,7 @@ package com.wp.filehandler.model;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
+import com.wp.filehandler.mapper.ExcelDataModelMapper;
 import com.wp.filehandler.service.ExcelDataService;
 import com.wp.filehandler.service.impl.ExcelDataServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ public class ExcelDataModelListener extends AnalysisEventListener<ExcelDataModel
     private static final int BATCH_COUNT = 51;
     private List<ExcelDataModel> list = new ArrayList<>();
     private ExcelDataService excelDataService;
+    private ExcelDataModelMapper excelDataModelMapper;
 
     public ExcelDataModelListener() {
         excelDataService = new ExcelDataServiceImpl();
@@ -27,6 +29,7 @@ public class ExcelDataModelListener extends AnalysisEventListener<ExcelDataModel
 
     public ExcelDataModelListener(ExcelDataService excelDataService) {
         this.excelDataService = excelDataService;
+        this.excelDataModelMapper = ((ExcelDataServiceImpl) excelDataService).getExcelDataModelMapper();
     }
 
     /**
@@ -37,7 +40,7 @@ public class ExcelDataModelListener extends AnalysisEventListener<ExcelDataModel
      */
     @Override
     public void invoke(ExcelDataModel data, AnalysisContext analysisContext) {
-        excelDataService.handleData(data);
+//        excelDataService.handleData(data);
         list.add(data);
         if (list.size() >= BATCH_COUNT) {
             //防止OOM因此达到阈值就进行一次保存
@@ -59,5 +62,6 @@ public class ExcelDataModelListener extends AnalysisEventListener<ExcelDataModel
 
     private void save(List<ExcelDataModel> list) {
         log.info("保存数据：{}", list);
+        excelDataModelMapper.insertAll(list);
     }
 }

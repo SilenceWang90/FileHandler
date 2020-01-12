@@ -22,6 +22,9 @@ public class ExcelDataServiceImpl implements ExcelDataService {
     @Override
     public void handleData(ExcelDataModel data) {
         log.info("service处理数据");
-        excelDataModelMapper.insertOne(data);
+    }
+
+    public ExcelDataModelMapper getExcelDataModelMapper() {
+        return excelDataModelMapper;
     }
 }
