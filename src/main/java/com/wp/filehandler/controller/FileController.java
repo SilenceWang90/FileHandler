@@ -1,8 +1,11 @@
 package com.wp.filehandler.controller;
 
+import cn.hutool.poi.excel.ExcelReader;
+import cn.hutool.poi.excel.ExcelUtil;
 import com.alibaba.excel.EasyExcel;
 import com.wp.filehandler.model.ExcelDataModel;
 import com.wp.filehandler.model.ExcelDataModelListener;
+import com.wp.filehandler.model.HutoolReadData;
 import com.wp.filehandler.service.ExcelDataService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @Classname FileController
@@ -29,18 +33,21 @@ public class FileController {
 
     /**
      * EasyExcel读取Excel方法
+     *
      * @param file
      * @return
      * @throws IOException
      */
     @PostMapping("/easyExcelReadExcel")
     public String easyExcelReadExcel(@RequestParam("file") MultipartFile file) throws IOException {
+        //通过@ExcelProperty(index = 2)制定读取哪几列数据，目前只需要第3,5,9列数据
         EasyExcel.read(file.getInputStream(), ExcelDataModel.class, new ExcelDataModelListener(excelDataService)).sheet().doRead();
         return "读取成功";
     }
 
     @PostMapping("/hutoolReadExcel")
-    public String hutoolReadExcel(@RequestParam("file") MultipartFile file){
+    public String hutoolReadExcel(@RequestParam("file") MultipartFile file) throws IOException {
+        ExcelReader excelReader = ExcelUtil.getReader(file.getInputStream(), "临时定级");
         return "读取成功";
     }
 }
