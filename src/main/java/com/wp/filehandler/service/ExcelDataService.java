@@ -9,5 +9,5 @@ import com.wp.filehandler.model.ExcelDataModel;
  * @Created by wangpeng116
  */
 public interface ExcelDataService {
-    String handleData(ExcelDataModel data);
+    void handleData(ExcelDataModel data);
 }

@@ -1,8 +1,10 @@
 package com.wp.filehandler.service.impl;
 
+import com.wp.filehandler.mapper.ExcelDataModelMapper;
 import com.wp.filehandler.model.ExcelDataModel;
 import com.wp.filehandler.service.ExcelDataService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,9 +16,12 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class ExcelDataServiceImpl implements ExcelDataService {
+    @Autowired
+    private ExcelDataModelMapper excelDataModelMapper;
+
     @Override
-    public String handleData(ExcelDataModel data) {
-        log.info("数据处理");
-        return "service处理数据";
+    public void handleData(ExcelDataModel data) {
+        log.info("service处理数据");
+        excelDataModelMapper.insertOne(data);
     }
 }

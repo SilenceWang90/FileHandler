@@ -27,9 +27,20 @@ public class FileController {
     @Autowired
     private ExcelDataService excelDataService;
 
-    @PostMapping("/readExcel")
-    public String readExcel(@RequestParam("file") MultipartFile file) throws IOException {
-        EasyExcel.read(file.getInputStream(), ExcelDataModel.class, new ExcelDataModelListener()).sheet().doRead();
+    /**
+     * EasyExcel读取Excel方法
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @PostMapping("/easyExcelReadExcel")
+    public String easyExcelReadExcel(@RequestParam("file") MultipartFile file) throws IOException {
+        EasyExcel.read(file.getInputStream(), ExcelDataModel.class, new ExcelDataModelListener(excelDataService)).sheet().doRead();
+        return "读取成功";
+    }
+
+    @PostMapping("/hutoolReadExcel")
+    public String hutoolReadExcel(@RequestParam("file") MultipartFile file){
         return "读取成功";
     }
 }

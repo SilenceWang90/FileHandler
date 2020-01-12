@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Slf4j
 public class ExcelDataModelListener extends AnalysisEventListener<ExcelDataModel> {
-    private static final int BATCH_COUNT = 5;
+    private static final int BATCH_COUNT = 51;
     private List<ExcelDataModel> list = new ArrayList<>();
     private ExcelDataService excelDataService;
 
