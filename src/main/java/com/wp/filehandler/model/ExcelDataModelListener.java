@@ -40,7 +40,7 @@ public class ExcelDataModelListener extends AnalysisEventListener<ExcelDataModel
      */
     @Override
     public void invoke(ExcelDataModel data, AnalysisContext analysisContext) {
-//        excelDataService.handleData(data);
+        excelDataService.handleData(data);
         list.add(data);
         if (list.size() >= BATCH_COUNT) {
             //防止OOM因此达到阈值就进行一次保存
